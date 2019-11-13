@@ -57,4 +57,4 @@ SELECT CustomerID FROM customer
  INTERSECT
 SELECT CustomerID FROM orders;
 
-
+hii i am learning this!
