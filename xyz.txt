@@ -1,0 +1,448 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 assignment no 3:\b0\par
+\par
+Create database assignment3;\par
+use assignment3;\par
+\par
+-------first question-------\par
+---Create Store Procedure for getting Department Name by DepartmentID (Use only Input variable)---\par
+Create Table Department (\par
+DepartmentId int Primary Key,\par
+DepartmentName Varchar(50),\par
+MaxDeptSize int\par
+);\par
+\par
+Insert into Department (DepartmentId, DepartmentName, MaxDeptSize)\par
+Values(101, 'Comps', 500)\par
+Insert into Department (DepartmentId, DepartmentName, MaxDeptSize)\par
+Values(102, 'EXTC', 300)\par
+Insert into Department (DepartmentId, DepartmentName, MaxDeptSize)\par
+Values(103, 'IT', 450)\par
+Insert into Department (DepartmentId, DepartmentName, MaxDeptSize)\par
+Values(104, 'MECH', 475)\par
+\par
+\par
+Select * from Department;\par
+\par
+\par
+DepartmentId DepartmentName                                     MaxDeptSize\par
+------------ -------------------------------------------------- -----------\par
+101          Comps                                              500\par
+102          EXTC                                               300\par
+103          IT                                                 450\par
+104          MECH                                               475\par
+\par
+(4 row(s) affected)\par
+\par
+\par
+Create PROCEDURE GetDepartmentname\par
+(\par
+@deptId INT  --Input parameter ,  Studentid of the student\par
+)\par
+AS\par
+BEGIN\par
+SELECT DepartmentName FROM Department\par
+WHERE DepartmentId=@deptId\par
+END\par
+\par
+Select * from Department;\par
+Execute GetDepartmentname 101;\par
+\par
+DepartmentId DepartmentName                                     MaxDeptSize\par
+------------ -------------------------------------------------- -----------\par
+101          Comps                                              500\par
+102          EXTC                                               300\par
+103          IT                                                 450\par
+104          MECH                                               475\par
+\par
+(4 row(s) affected)\par
+\par
+DepartmentName\par
+--------------------------------------------------\par
+Comps\par
+\par
+(1 row(s) affected)\par
+\par
+\par
+----Create Store Procedure for getting Department Name by Input and OutputVariable----\par
+Create PROCEDURE GetDeptnameInOutputVariable\par
+(\par
+@deptId INT,                   \par
+@name VARCHAR(50) OUT,   \par
+@size int OUT     \par
+)\par
+AS\par
+BEGIN\par
+SELECT @name= DepartmentName,\par
+    @size = MaxDeptSize FROM Department WHERE DepartmentId=@deptId\par
+END\par
+\par
+\par
+Declare @deptId as int   \par
+Declare @name as varchar(50)\par
+Declare @size as int       \par
+Execute GetDeptnameInOutputVariable 101 ,\par
+@name output, @size output\par
+select @name,@size   \par
+\par
+\par
+                                                   \par
+-------------------------------------------------- --------------------------------------------------\par
+Comps                                              500\par
+\par
+(1 row(s) affected)\par
+\par
+\par
+---Create Store Procedure for Update MaxDeptSize by DepartmentID.----\par
+\par
+\par
+Create Procedure UpdateDeptrecord\par
+( @deptId INT,\par
+ @name Varchar(50)\par
+)\par
+As\par
+ Begin\par
+     Update Department\par
+     Set DepartmentName=@name\par
+Where DepartmentId=@deptId\par
+ End\par
+\par
+\par
+ Exec UpdateDeptrecord 102,'Instrumentation';\par
+ Select * from Department\par
+\par
+\par
+DepartmentId DepartmentName                                     MaxDeptSize\par
+------------ -------------------------------------------------- -----------\par
+101          Comps                                              500\par
+102          Instrumentation                                    300\par
+103          IT                                                 450\par
+104          MECH                                               475\par
+\par
+(4 row(s) affected)\par
+\par
+\par
+\par
+ ----Create Store Procedure for Delete Department table record by DepartmentID.---\par
+\par
+ Create Procedure Deleterecord\par
+(\par
+ @deptId int\par
+)\par
+As\par
+Begin\par
+Delete from Department where DepartmentId=@deptId\par
+End\par
+\par
+Exec Deleterecord 104\par
+\par
+Select * from Department\par
+\par
+DepartmentId DepartmentName                                     MaxDeptSize\par
+------------ -------------------------------------------------- -----------\par
+101          Comps                                              500\par
+102          Instrumentation                                    300\par
+103          IT                                                 450\par
+\par
+(3 row(s) affected)\par
+\par
+------q3-----\par
+\par
+CREATE TABLE Area\par
+\par
+(\par
+\par
+AreaID int NOT NULL,\par
+\par
+AreaName varchar(100) NOT NULL,\par
+\par
+ParentAreaID int NULL,\par
+\par
+AreaType varchar(20) NOT NULL\par
+\par
+CONSTRAINT PK_Area PRIMARY KEY CLUSTERED\par
+\par
+( AreaID ASC\par
+\par
+) ON [PRIMARY])\par
+\par
+GO\par
+\par
+ \par
+\par
+ \par
+\par
+ \par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(1, 'India', null, 'Country')\par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(2, 'United States', null, 'Country')\par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(3, 'Maharashtra', 1, 'State')\par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(4, 'Mumbai', 3, 'City')\par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(5, 'Florida', 2, 'State')\par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(6, 'Miami', 5, 'City')\par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(7, 'Karnatak', 1, 'State')\par
+\par
+INSERT INTO Area(AreaID,AreaName,ParentAreaID,AreaType)\par
+\par
+VALUES(8, 'Pune', 3, 'City')\par
+\par
+ \par
+\par
+Select * from Area;\par
+\par
+select * from Area\par
+\par
+where AreaType = 'City'\par
+\par
+ \par
+\par
+Select * from Area\par
+\par
+Where AreaName='India' and AreaType='City';\par
+\par
+ \par
+\par
+Select * from Area\par
+Where ParentAreaID=1 and AreaType='City';\par
+\par
+\par
+WITH AreasCTE AS\par
+\par
+(\par
+\par
+\par
+\par
+SELECT AreaID, AreaName, ParentAreaID, AreaType\par
+\par
+FROM Area\par
+\par
+WHERE AreaName = 'India'\par
+\par
+UNION ALL\par
+\par
+ \par
+\par
+SELECT a.AreaID, a.AreaName, a.ParentAreaID, a.AreaType\par
+\par
+FROM Area a\par
+\par
+INNER JOIN AreasCTE s ON a.ParentAreaID = s.AreaID\par
+\par
+)\par
+\par
+SELECT * FROM AreasCTE \par
+\par
+where AreaType = 'City';\par
+\par
+AreaID      AreaName                                                                                             ParentAreaID AreaType\par
+----------- ---------------------------------------------------------------------------------------------------- ------------ --------------------\par
+4           Mumbai                                                                                               3            City\par
+8           Pune                                                                                                 3            City\par
+\par
+(2 row(s) affected)\par
+\par
+----q2------\par
+Create Table Student(\par
+StudentRollNo int Primary Key,\par
+StudentName Varchar(50),\par
+StudentAge int,\par
+StudentAdd Varchar(50)\par
+)\par
+insert into student values(123,'manoj',23,'mumbai');\par
+insert into student values(234,'nitin',24,'dubai');\par
+insert into student values(345,'rishi',20,'delhi');\par
+insert into student values(456,'soham',29,'pune');\par
+\par
+select * from Student;\par
+\par
+StudentRollNo StudentName                                        StudentAge  StudentAdd\par
+------------- -------------------------------------------------- ----------- --------------------------------------------------\par
+123           manoj                                              23          mumbai\par
+234           nitin                                              24          dubai\par
+345           rishi                                              20          delhi\par
+456           soham                                              29          pune\par
+\par
+(4 row(s) affected)\par
+\par
+\par
+\par
+CREATE TRIGGER trgAfterInsert ON Student\par
+FOR INSERT\par
+AS\par
+\tab PRINT 'AFTER INSERT trigger fired.'\par
+GO\par
+\par
+insert into Student values(987,'dheeraj',30,'mumbai');\par
+insert into Student values(765,'girish',34,'kankan');\par
+insert into Student values(433,'nihal',44,'goa');\par
+\par
+AFTER INSERT trigger fired.\par
+\par
+(1 row(s) affected)\par
+AFTER INSERT trigger fired.\par
+\par
+(1 row(s) affected)\par
+AFTER INSERT trigger fired.\par
+\par
+(1 row(s) affected)\par
+\par
+CREATE TRIGGER trgAfterUpdate ON Student\par
+FOR UPDATE\par
+AS\par
+\tab PRINT 'AFTER Update trigger fired.'\par
+GO\par
+\par
+Update Student \par
+Set StudentAge=34\par
+where StudentName='girish'\par
+\par
+StudentRollNo StudentName                                        StudentAge  StudentAdd\par
+------------- -------------------------------------------------- ----------- --------------------------------------------------\par
+123           manoj                                              23          mumbai\par
+234           nitin                                              24          dubai\par
+345           rishi                                              20          delhi\par
+433           nihal                                              44          goa\par
+456           soham                                              29          pune\par
+765           girish                                             34          kankan\par
+987           dheeraj                                            30          mumbai\par
+\par
+(7 row(s) affected)\par
+\par
+\par
+Create trigger AfterDelete on Student \par
+for delete\par
+as\par
+\tab declare @stud_id int;\par
+\tab declare @studname varchar(50);\par
+\tab declare @stud_age int;\par
+select @stud_id=d.StudentRollNo from deleted d;\par
+select @studname=d.StudentName from deleted d;\par
+select @stud_age=d.StudentAge from deleted d;\par
+print 'Deleting Record for studentId '\par
+print @stud_id\par
+print 'Deleting Deleting Record for student Name '\par
+print @studname\par
+print 'Deleting Record for student age  '\par
+print @stud_age\par
+go\par
+\par
+\par
+\par
+Select * from Student;\par
+\par
+delete from Student where StudentRollNo=654;\par
+\par
+Select * from Student;\par
+\par
+StudentRollNo StudentName                                        StudentAge  StudentAdd\par
+------------- -------------------------------------------------- ----------- --------------------------------------------------\par
+123           manoj                                              23          mumbai\par
+234           nitin                                              24          dubai\par
+345           rishi                                              20          delhi\par
+433           nihal                                              44          goa\par
+456           soham                                              29          pune\par
+765           girish                                             34          kankan\par
+987           dheeraj                                            30          mumbai\par
+\par
+(7 row(s) affected)\par
+\par
+Deleting Record for studentId \par
+ \par
+Deleting Deleting Record for student Name \par
+ \par
+Deleting Record for student age  \par
+ \par
+\par
+(0 row(s) affected)\par
+StudentRollNo StudentName                                        StudentAge  StudentAdd\par
+------------- -------------------------------------------------- ----------- --------------------------------------------------\par
+123           manoj                                              23          mumbai\par
+234           nitin                                              24          dubai\par
+345           rishi                                              20          delhi\par
+433           nihal                                              44          goa\par
+456           soham                                              29          pune\par
+765           girish                                             34          kankan\par
+987           dheeraj                                            30          mumbai\par
+\par
+(7 row(s) affected)\par
+\par
+\par
+create TRIGGER trgInsteadOfDelete ON Student\par
+INSTEAD OF DELETE\par
+AS\par
+\tab declare @stud_id int;\par
+\tab declare @studname varchar(100);\par
+\tab declare @stud_age int;\par
+\tab select @stud_id =d.StudentRollNo from deleted d;\par
+\tab select @studname=d.StudentName from deleted d;\par
+\tab select @stud_age=d.StudentAge from deleted d;\par
+\par
+\tab BEGIN\par
+\tab\tab if(@stud_age<30)\par
+\tab\tab begin\par
+\tab\tab\tab RAISERROR\par
+\tab\tab\tab ('Cannot delete project having project Duration >4',16,1);\par
+\tab\tab\tab ROLLBACK;\par
+\tab\tab end\par
+\tab\tab else\par
+\tab\tab begin\par
+\tab\tab\tab delete from Student where StudentRollNo=@stud_id;\par
+\tab\tab\tab COMMIT;\par
+\tab\tab\tab PRINT 'Record Deleted -- Instead Of Delete Trigger.'\par
+\tab\tab end\par
+\tab END\par
+GO\par
+\par
+\par
+Select * from Student;\par
+\par
+StudentRollNo StudentName                                        StudentAge  StudentAdd\par
+------------- -------------------------------------------------- ----------- --------------------------------------------------\par
+123           manoj                                              23          mumbai\par
+234           nitin                                              24          dubai\par
+345           rishi                                              20          delhi\par
+433           nihal                                              44          goa\par
+456           soham                                              29          pune\par
+765           girish                                             34          kankan\par
+987           dheeraj                                            30          mumbai\par
+\par
+(7 row(s) affected)\par
+\par
+Delete from Student where StudentRollNo=456;\par
+\par
+Msg 50000, Level 16, State 1, Procedure trgInsteadOfDelete, Line 82\par
+Cannot delete project having project Duration >4\par
+Msg 3609, Level 16, State 1, Line 69\par
+The transaction ended in the trigger. The batch has been aborted.\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+}
+ 
