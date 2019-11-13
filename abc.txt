@@ -1,0 +1,60 @@
+ASSIGNMENT NO 2:
+
+create database setoperation;
+use setoperation;
+
+
+create table customer
+(
+CustomerID int PRIMARY KEY,
+Name varchar(30),
+City varchar(20)
+);
+
+create table orders
+(
+OrderNumber int,
+OrderDate date,
+CustomerID int REFERENCES customer(CustomerID),
+SalespersonID int,
+Amount int
+);
+
+INSERT INTO customer VALUES (12345,'Shridhar','Mumbai');
+INSERT INTO customer VALUES (54321,'Kiran','Delhi');
+INSERT INTO customer VALUES (76534,'Dayanand','Delhi');
+INSERT INTO customer VALUES (8938,'Sandeep','Banglore');
+INSERT INTO customer VALUES (98654,'Sudhir','Pune');
+
+INSERT INTO orders VALUES
+(9876,'2017/05/03',12345,3456,5000);
+INSERT INTO orders VALUES
+(7654,'2017/06/22',54321,6432,10000);
+INSERT INTO orders VALUES
+(3654,'2017/02/05 16:11:22',76534,3456,7987);
+INSERT INTO orders VALUES
+(2693,'2017/08/11',8938,8654,7000);
+INSERT INTO orders VALUES
+(5876,'2017/05/03',98654,3456,3666);
+INSERT INTO orders VALUES
+(9876,'2017/08/23',12345,8654,3678);
+INSERT INTO orders VALUES
+(3654,'2017/10/12',76534,6432,8754);
+
+Select * from Customer;
+Select * from Orders;
+
+SELECT CustomerID FROM customer
+UNION ALL
+SELECT CustomerID FROM orders;
+
+SELECT CustomerID FROM customer
+UNION 
+SELECT CustomerID FROM orders;
+
+
+SELECT CustomerID FROM customer
+ INTERSECT
+SELECT CustomerID FROM orders;
+
+
